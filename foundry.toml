@@ -4,5 +4,13 @@ out = "out"
 libs = ["lib"]
 remappings = ['@openzeppelin/contracts=lib/openzeppelin-contracts/contracts']
 
+solc_version = "0.8.28"
+optimizer = true
+optimizer_runs = 200
+
+[etherscan]
+custom = { key = "7f9e357e5834431aa53a0ba3f288208b", api_url = "https://api-testnet.arc.network/api" }
+
+
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
