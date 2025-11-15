@@ -10,7 +10,7 @@ contract PoolPay {
 
     IERC20 token;
 
-    uint256 public constant DECIMAL_FACTOR = 1e18;
+    uint256 public constant DECIMAL_FACTOR = 1e6;
 
     // referral code for the pool
     bytes32 public masterReferralCode;
