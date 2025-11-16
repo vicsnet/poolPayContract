@@ -112,6 +112,7 @@ contract PoolPay {
     // join group
     function joinGroup(string memory _referralCode) external {
         uint256 maxContributors = getMaxContributors();
+        address user = tx.origin; 
         require(
             totalContributor <= maxContributors,
             "Max contributors reached"
@@ -119,14 +120,14 @@ contract PoolPay {
         bytes32 refferalHash = keccak256(abi.encodePacked(_referralCode));
         require(refferalHash == masterReferralCode, "Invalid referral code");
         require(poolStatus == PoolStatus.NotStarted, "Pool is Active");
-        require(!isContributor[msg.sender], "Already a contributor");
-        contributors.push(msg.sender);
-        isContributor[msg.sender] = true;
+        require(!isContributor[user], "Already a contributor");
+        contributors.push(user);
+        isContributor[user] = true;
         totalContributor += 1;
         // for now i am assigning payout position based on join order
         uint256 assignedPayoutPosition = totalContributor;
-        payoutPosition[assignedPayoutPosition] = msg.sender;
-        positionOfContributor[msg.sender] = assignedPayoutPosition;
+        payoutPosition[assignedPayoutPosition] = user;
+        positionOfContributor[user] = assignedPayoutPosition;
     }
 
     // function to contribute into the savings
@@ -153,10 +154,7 @@ contract PoolPay {
         );
 
         require(_amount >= minimumAmount, "Amount less than minimum");
-        // require(
-        //     token.balanceOf(msg.sender) >= _amount,
-        //     "Insufficient token balance"
-        // );
+
         token.transferFrom(msg.sender, address(this), _amount);
 
         hasContributedInCycle[msg.sender][currentCycle] = true;

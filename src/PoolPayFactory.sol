@@ -47,6 +47,7 @@ contract PoolPayFactory {
         PoolPay pool = PoolPay(poolAddress);
         pool.joinGroup(_referralCode);
         JoinedPools[msg.sender].push(poolAddress);
+        userCreatedPools[msg.sender].push(poolAddress);
        
     }
 
